@@ -1,5 +1,5 @@
 #![allow(dead_code)]
-use std::{error, fmt, fs::File, io::{self, BufWriter, Read, Write}, string};
+use std::{error, fmt::{self, Debug}, fs::File, io::{self, BufWriter, Read, Write}, string};
 
 #[derive(Debug)]
 pub struct XnbData {
@@ -147,13 +147,26 @@ fn read_shared_resource(
     }
 }
 
-#[derive(Debug)]
 pub struct SoundEffect {
     waveformatex: WaveFormatEx,
     waveformdata: Vec<u8>,
     loop_start: i32,
     loop_len: i32,
     duration_ms: i32,
+}
+
+impl Debug for SoundEffect {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        write!(
+            f,
+            "SoundEffect {{\r\n\t{:?},\r\n\twaveformdata_size: {},\r\n\tloop_start: {},\r\n\tloop_len: {},\r\n\tduration_ms: {}\r\n}}",
+            self.waveformatex,
+            self.waveformdata.len(),
+            self.loop_start,
+            self.loop_len,
+            self.duration_ms,
+        )
+    }
 }
 
 fn read_sound_effect(r: &mut dyn Read) -> Result<SharedResource, XnbError> {

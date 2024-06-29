@@ -1,6 +1,6 @@
 use std::{fs::File, io::{BufReader, Read}};
 
-use xnblib::{XnbData, XnbError};
+use xnbsoundexporter::{XnbData, XnbError};
 
 fn main() -> Result<(), std::io::Error> {
     let args = std::env::args().collect::<Vec<String>>();    
@@ -19,7 +19,7 @@ fn main() -> Result<(), std::io::Error> {
     }
 
     let data = data.unwrap();
-    println!("XnbData:\r\n{data:?}");
+    println!("{data:#?}");
 
     return Ok(());
 }
