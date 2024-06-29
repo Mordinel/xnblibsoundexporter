@@ -263,6 +263,7 @@ fn read_i32(r: &mut dyn Read) -> Result<i32, XnbError> {
     Ok(i32::from_le_bytes(num_data))
 }
 
+// Rewrite of: https://github.com/dotnet/runtime/blob/5535e31a712343a63f5d7d796cd874e563e5ac14/src/libraries/System.Private.CoreLib/src/System/IO/BinaryReader.cs#L535C9-L577C10
 fn read_seven_bit_encoded_int(r: &mut dyn Read) -> Result<i32, XnbError> {
     let mut result = 0u32;
     let mut value = [0u8; 1];
