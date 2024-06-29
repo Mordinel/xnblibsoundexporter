@@ -1,0 +1,10 @@
+[package]
+name = "xnbsoundexporter"
+version = "2.0.1"
+edition = "2021"
+authors = ["Mason Soroka-Gill <Mordinel@pm.me>"]
+repository = "https://github.com/Mordinel/xnbsoundexporter"
+description = "Unfaithful port of https://github.com/Pyroglyph/XNBLib/blob/master/XNBLib/SoundExporter.cs"
+license = "Apache-2.0"
+publish = false
+
