@@ -1,6 +1,7 @@
-use std::{fs::File, io::{BufReader, Read}};
+use std::fs::{self, File};
+use std::io::{Read, BufReader};
 
-use xnbsoundexporter::{XnbData, XnbError};
+use xnbparse::{SharedResource, XnbData, XnbError};
 
 fn main() -> Result<(), std::io::Error> {
     let args = std::env::args().collect::<Vec<String>>();    
@@ -19,7 +20,17 @@ fn main() -> Result<(), std::io::Error> {
     }
 
     let data = data.unwrap();
-    println!("{data:#?}");
+    data.shared_resources.into_iter()
+        .filter_map(|p| match p {
+            SharedResource::SoundEffect(s_e) => Some(s_e.file_data().ok()?),
+            _ => None,
+        })
+        .enumerate()
+        .for_each(|(i, effect)| {
+            let filename = format!("0{i}.wav");
+            let _ = fs::write(filename.clone(), &effect).ok();
+            println!("Extracted '{filename}'");
+        });
 
     return Ok(());
 }
